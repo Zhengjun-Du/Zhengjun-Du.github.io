@@ -1,0 +1,339 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="./material/js/jquery-3.5.1.min.js"></script>
+    <title>
+        comparison with GUI
+    </title>
+    <style>
+        .composition > img, .blend-layers > img{
+                mix-blend-mode: normal;
+                position: absolute;
+                /*height: 300px;*/
+                /*width: 180px;*/
+                display: block;
+        }
+
+        .all-layers th > img{
+                background-image:
+                    linear-gradient(45deg, #ddd 25%, transparent 0),
+                    linear-gradient(45deg, transparent 75%, #ddd 0),
+                    linear-gradient(45deg, #ddd 25%, transparent 0),
+                    linear-gradient(45deg, transparent 75%, #ddd 0);
+
+                background-size:30px 30px;
+                background-position: 0 0,15px 15px,15px 15px,30px 30px;
+                height:150px;
+                margin-left: 5px;
+                border:1px solid #ccc;
+        }
+
+        .layers_bg{
+             background-image:
+                    linear-gradient(45deg, #ddd 25%, transparent 0),
+                    linear-gradient(45deg, transparent 75%, #ddd 0),
+                    linear-gradient(45deg, #ddd 25%, transparent 0),
+                    linear-gradient(45deg, transparent 75%, #ddd 0);
+
+                background-size:30px 30px;
+                background-position: 0 0,15px 15px,15px 15px,30px 30px;
+        }
+
+        input[type="radio"]{
+            zoom:150%;
+        }
+
+        .rtext{
+            font-size:1.3em;
+            font-weight:normal;
+        }
+
+    </style>
+    <script type="text/javascript">
+    function CheckStatus(id) {
+        $("input[name='layer-order" + id + "']").each(function(i) {
+            if (this.checked)
+                $("#blend-layers" + id + " > img").eq(i).show();
+            else
+                $("#blend-layers" + id + " > img").eq(i).hide();
+        });
+    }
+
+    function SelectAll(id) {
+        $("input[name='layer-order" + id + "']").prop('checked', true);
+        $("#blend-layers" + id + " > img").show();
+    }
+
+    function SelectNone(id) {
+        $("input[name='layer-order" + id + "']").prop('checked', false);
+        $("#blend-layers" + id + " > img").hide();
+    }
+
+    function SelectInvert(id) {
+        $("input[name='layer-order" + id + "']").each(function(i) {
+            this.checked = !this.checked;
+            if (this.checked)
+                $("#blend-layers" + id + " > img").eq(i).show();
+            else
+                $("#blend-layers" + id + " > img").eq(i).hide();
+        });
+    }
+
+    $(document).ready(function() {
+
+        var data_list = new Array(
+            ["1-Can", "Can", 20, 22, 175, 300],
+            ["3-Cone", "Cone", 9, 9, 225, 200],
+            ["5-Purple-circle", "Purple-circle", 11, 12, 200, 180],
+            ["11-Hammer", "Hammer", 18, 17, 300, 260],
+            ["13-Tiger", "Tiger", 28, 30, 250, 193],
+            ["17-Cherry", "Cherry", 13, 12, 320, 320],
+            ["19-Torch", "Torch", 19, 20, 320, 302],
+            ["21-Rocket", "Rocket", 30, 30, 400, 240],
+            ["23-Plane", "Plane", 50, 52, 363, 184],
+            ["25-Soda", "Soda", 23, 25, 186, 300],
+            ["30-Trees", "Trees", 32, 25, 296, 183],
+            ["27-Teapot1", "Teapot1", 22, 25, 240, 255],
+            ["33-Syn0", "Syn0", 5, 5, 183, 296],
+            ["35-syn2", "Syn2", 6, 6, 300, 300],
+            ["37-syn4", "Syn4", 6, 6, 300, 300],
+            ["2-Battery", "Battery", 14, 17, 140, 300],
+            ["4-Car", "Car", 41, 34, 222, 203],
+            ["7-Coffee", "Coffee", 13, 20, 240, 260],
+            ["10-cow", "Cow", 48, 52, 226, 202],
+            ["12-Truck", "Truck", 43, 47, 250, 193],
+            ["16-House", "House", 42, 48, 275, 145],
+            ["18-Sound", "Sound", 32, 29, 254, 312],
+            ["20-Bear", "Bear", 30, 27, 239, 255],
+            ["22-Mouse", "Mouse", 15, 18, 186, 300],
+            ["26-Lamp", "Lamp", 20, 19, 207, 300],
+            ["31-Teapot2", "Teapot2", 29, 26, 246, 284],
+            ["24-Shoe1", "Shoe1", 10, 12, 250, 175],
+            ["39-syn6", "Syn6", 5, 4, 300, 300],
+            ["41-syn8", "Syn8", 6, 6, 300, 300],
+            ["34-syn1", "Syn1", 6, 6, 222, 222],
+            ["38-syn5", "Syn6", 6, 6, 222, 222],
+            ["40-syn7", "Syn7", 6, 6, 222, 222],
+        );
+
+        Math.seed = 5;
+        Math.seededRandom = function(max, min) {
+            max = max || 1;
+            min = min || 0;
+
+            Math.seed = (Math.seed * 9301 + 49297) % 233280;
+            var rnd = Math.seed / 233280.0;
+
+            return Math.ceil(min + rnd * (max - min));
+        };
+
+        var randNums = [];
+        for (var i = 0; i < 17; i++)
+            randNums.push(Math.seededRandom(1, 100));
+
+
+        var html_str = "";
+
+        for (var i in data_list) {
+            var dir = data_list[i][0];
+            var name = data_list[i][1];
+            var our_layer_cnt = data_list[i][2];
+            var photo2clipart_layer_cnt = data_list[i][3];
+            var img_w = data_list[i][4];
+            var img_h = data_list[i][5];
+            var str_2i = (2 * Number(i)).toString();
+            var str_2i_1 = (2 * Number(i) + 1).toString();
+            var rnd = randNums[i];
+
+            var str_a = "";
+            html_str += '<h2>Comparison ' + (Number(i) + 1).toString() + '：' + name + '</h2>';
+            //html_str += '<hr style="border:2px solid black;">';
+            html_str += '<div style="border:2px solid gray; padding:2px">';
+
+            //vectorize results A
+            var str_a_head =
+                '<table style="text-align: left;">' +
+                '<tr style="text-align: center; padding-bottom: 10px; font-size: 1.4em; ">' +
+                '<th style="font-weight: normal;">Input Image</th>' +
+                '<th style="font-weight: normal; padding-left:30px">Photo2ClipArt</th>' +
+                '<th style="font-weight: normal; color: red">Interactive layer selection</th>' +
+                '<th style="font-weight: normal;">Composed result</th>' +
+                '</tr>' +
+
+                '<tr>' +
+                '<th valign="top"><img style="height:' + img_h + 'px" src="./material/interactive_comparison/' + dir + '/input.png" /></th>' +
+                '<th valign="top" style="width:' + img_w + 'px; padding-left:30px">' + '<div class="composition" style="height:">';
+
+            for (var j = 0; j < Number(our_layer_cnt); j++)
+                str_a += '<img height="' + img_h + 'px" src="./material/interactive_comparison/' + dir + '/ours.png/' + (j).toString() + '.png" />';
+
+            str_a +=
+                '</div>' +
+                '</th>' +
+
+                '<th align="left" style="padding-left:10px; padding-right:20px">' +
+                '<input type="radio" name="select' + str_2i + '" onclick="SelectAll(' + str_2i + ')"> <span class="rtext">check all</span>' +
+                '<input type="radio" name="select' + str_2i + '" checked="checked"  onclick="SelectNone(' + str_2i + ')"> <span class="rtext">check none</span>' +
+                '<input type="radio" name="select' + str_2i + '" onclick="SelectInvert(' + str_2i + ')"> <span class="rtext">invert</span> <br>' +
+                '<hr>';
+
+            var row_len = 6;
+            if (Math.min(Number(our_layer_cnt), Number(photo2clipart_layer_cnt)) < 6)
+                row_len = Math.min(Number(our_layer_cnt), Number(photo2clipart_layer_cnt));
+
+            for (var j = 0; j < Number(our_layer_cnt); j++) {
+                var layer_order = 'L' + ('0' + (j + 1).toString()).substr(-2);
+                str_a += '<input style="zoom:150%;" type="checkbox" onclick="CheckStatus(' + str_2i + ')" name="layer-order' + str_2i + '" checked>' + layer_order;
+                if ((j + 1) % row_len == 0) str_a += '<br>';
+            }
+
+
+            str_a +=
+                '</th>' +
+                '<th valign="top"  style="width:' + img_w + 'px; padding-left:20px; padding-right:20px; text-align:center" class="layers_bg">' +
+                '<div id="blend-layers' + str_2i + '" class="blend-layers">';
+
+            for (var j = 0; j < Number(our_layer_cnt); j++)
+                str_a += '<img height="' + img_h + 'px" src="./material/interactive_comparison/' + dir + '/ours.png/' + j.toString() + '.png" />';
+
+            str_a +=
+                '</div>' +
+                '</th>' +
+                '</tr>' +
+                '</table>';
+
+            str_a +=
+                '<p style="font-size: 1.3em; margin-top:5px; margin-bottom:5px">All decomposed layers of our vectorization are shown below, drag the scroll bar to see all layers.</p>' +
+                '<div class="all-layers" style="overflow-x: auto; overflow-y: hidden; height:200px; width:95%; white-space: nowrap; ">' +
+                '<table>' +
+                '<tr>';
+
+            for (var j = 0; j < Number(our_layer_cnt); j++)
+                str_a += '<th><img src="./material/interactive_comparison/' + dir + '/ours.png/' + j.toString() + '.png" /></th>';
+
+            str_a += '</tr>';
+
+            str_a += '<tr>';
+            for (var j = 0; j < Number(our_layer_cnt); j++) {
+                var layer_order = 'L' + ('0' + (j + 1).toString()).substr(-2);
+                str_a += '<th>' + layer_order + '</th>';
+            }
+            str_a +=
+                '</tr>' +
+                '</table>' +
+                '</div>';
+
+            //vectorize results B
+            var str_b_head =
+                '<hr style="border:1px solid blue;">' +
+                '<table style="text-align: left;">' +
+                '<tr style="text-align: center; padding-bottom: 10px; font-size: 1.4em; ">' +
+                '<th style="font-weight: normal;">Input Image</th>' +
+                '<th style="font-weight: normal; padding-left:30px">Ours</th>' +
+                '<th style="font-weight: normal; color: red">Interactive layer selection</th>' +
+                '<th style="font-weight: normal;">Composed result</th>' +
+                '</tr>' +
+
+                '<tr>' +
+                '<th valign="top">' +
+                '<img style="height:' + img_h + 'px" src="./material/interactive_comparison/' + dir + '/input.png" />' +
+                '</th>' +
+                '<th valign="top" style="width:' + img_w + 'px; padding-left:30px">' +
+                '<div class="composition">';
+
+            var str_b = "";
+
+            for (var j = 0; j < Number(photo2clipart_layer_cnt); j++)
+                str_b += '<img height="' + img_h + 'px" src="./material/interactive_comparison/' + dir + '/photo2clipart.png/' + (j).toString() + '.png" />';
+
+            str_b +=
+                '</div>' +
+                '</th>' +
+
+                '<th align="left" style="padding-left:10px; padding-right:20px">' +
+                '<input type="radio" name="select' + str_2i_1 + '" onclick="SelectAll(' + str_2i_1 + ')"> <span class="rtext">check all</span>' +
+                '<input type="radio" name="select' + str_2i_1 + '" checked="checked" onclick="SelectNone(' + str_2i_1 + ')"> <span class="rtext">check none</span>' +
+                '<input type="radio" name="select' + str_2i_1 + '" onclick="SelectInvert(' + str_2i_1 + ')"> <span class="rtext">invert</span> <br>' +
+                '<hr>';
+
+            for (var j = 0; j < Number(photo2clipart_layer_cnt); j++) {
+                var layer_order = 'L' + ('0' + (j + 1).toString()).substr(-2);
+                str_b += '<input style="zoom:150%;" type="checkbox" onclick="CheckStatus(' + str_2i_1 + ')" name="layer-order' + str_2i_1 + '" checked>' + layer_order;
+                if ((j + 1) % row_len == 0) str_b += '<br>';
+            }
+
+            str_b +=
+                '</th>' +
+                '<th valign="top" style="width:' + img_w + 'px; padding-left:20px; padding-right:20px; text-align:center" class="layers_bg">' +
+                '<div id="blend-layers' + str_2i_1 + '" class="blend-layers">';
+
+            for (var j = 0; j < Number(photo2clipart_layer_cnt); j++)
+                str_b += '<img height="' + img_h + 'px" src="./material/interactive_comparison/' + dir + '/photo2clipart.png/' + j.toString() + '.png" />';
+
+            str_b +=
+                '</div>' +
+                '</th>' +
+                '</tr>' +
+                '</table>' +
+
+                '<p style="font-size: 1.3em; margin-top:5px; margin-bottom:5px">All decomposed layers of Photo2ClipArt\'s vectorization are shown below, drag the scroll bar to see all layers.</p>' +
+                '<div class="all-layers" style="overflow-x: auto; overflow-y: hidden; height:200px; width:95%; white-space: nowrap;">' +
+                '<table>' +
+                '<tr>';
+
+            for (var j = 0; j < Number(photo2clipart_layer_cnt); j++)
+                str_b += '<th><img src="./material/interactive_comparison/' + dir + '/photo2clipart.png/' + j.toString() + '.png" /></th>';
+
+            str_b += '</tr>';
+
+            str_b += '<tr>';
+            for (var j = 0; j < Number(photo2clipart_layer_cnt); j++) {
+                var layer_order = 'L' + ('0' + (j + 1).toString()).substr(-2);
+                str_b += '<th>' + layer_order + '</th>';
+            }
+            str_b +=
+                '</tr>' +
+                '</table>' +
+                '</div>';
+
+            //if (rnd % 2 == 0)
+            //    html_str += str_a_head + str_a + str_b_head + str_b;
+            //else
+            html_str += str_a_head + str_b + str_b_head + str_a;
+            html_str += '</div>';
+        }
+
+        $(".layers").append(html_str);
+        $(".blend-layers > img").hide();
+        $("input[type='checkbox']").prop('checked', false);
+    });
+    </script>
+</head>
+
+<body style="margin:15px;">
+    <main>
+        <h2 style="text-align: center; --title-size: 30px;">All layers</h2>
+    </main>
+    <h2>Introduction</h2>
+    <p style="font-size: 1.2em; border:2px solid gray; padding: 10px; line-height: 1.5">
+        This page contains 32 comparisons, each of which includes 4 rows: <br>
+        1st row: From left to right are the input image, Photo2ClipArt's vectorization result, an interactive layer selection tool, composed result with selected layers. <br>
+        2nd row: All secomposed semi-transparent layers of Photo2ClipArt. <br>
+        3rd row: From left to right are the input image, our vectorization result, an interactive layer selection tool, composed result with selected layers. <br>
+        4th row: All secomposed semi-transparent layers of ours. <br><br>
+        Users can 1) select a single layer for observation, or 2) select multiple layers to observe local composite results. The ids on the left of the check boxes correspond to the layer ids in the second row.
+    </p>
+    <div class="layers">
+    </div>
+    <h2>Copyright of our examples</h2>
+    <hr />
+    <p style="font-size: 1.2em; padding: 10px; line-height: 1.5">
+        Can: Altagracia Art on Shutterstock.com; Battery: macrovector on Shutterstock.com; Cone: Freepik; Car: storyset on Freepik; Purple-circle: starline on Freepik; <br>
+        Coffee: OpenClipart-Vectors from Pixabay; Cow: upklyak on Freepik; Hammer: brgfx on Freepik; Truck: Freepik; Tiger: callmetak on Freepik; House: upklyak on Freepik; <br>
+        Sound: upklyak on Freepik; Rocket: brgfx on Freepik; Torch: davidswidjaja on Pixabay; Bear: Freepik; Mouse: gstudioimagen on Freepik; Soda: brgfx on Freepik; <br>
+        Plane: brgfx on Freepik; Shoe1: macrovector on Freepik; Teapot1: macrovector on Freepik; Trees: pch.vector on Freepik; Teapot2: pch.vector on Freepik; <br>
+        Cherry: OpenClipart-Vectors from Pixabay; Syn(0~5,7,8): Zheng-Jun Du;
+    </p>
+</body>
+
+</html>

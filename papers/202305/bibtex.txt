@@ -1,0 +1,10 @@
+@article{Du:2023:IVE,
+ author    = {Du, Zheng-Jun and Kang, Liang-Fu and Tan, Jianchao and Gingold, Yotam and Xu, Kun},
+ title     = {Image vectorization and editing via linear gradient layer decomposition},
+ journal   = {ACM Transactions on Graphics (TOG)},
+ volume    = {42},
+ number    = {4},
+ year      = {2023},
+ month     = aug,
+ keywords  = {images, gradient, layers, vectorization, RGB, color space, recoloring, compositing}
+}

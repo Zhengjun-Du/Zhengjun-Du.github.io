@@ -1,0 +1,114 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./material/css/style.css" />
+    <script type="text/javascript" src="./material/js/jquery-3.5.1.min.js"></script>
+    <title>
+        time statistics
+    </title>
+</head>
+
+<body>
+    <header>
+    </header>
+    <main>
+        <h2 style="text-align: center">Time statistics</h2>
+        <script type="text/javascript">
+        $(document).ready(function() {
+
+            var table1 = new Array(
+                ["Can", 25, 64, 20, 0.1, 0.5, 0.1, 65.8, 66.5],
+                ["Battery", 18, 92, 14, 0.1, 0.1, 0.1, 48.7, 49.0],
+                ["Cone", 13, 10, 9, 0.1, 0.1, 0.1, 0.1, 0.4],
+                ["Car", 41, 144, 41, 0.1, 0.1, 0.1, 263.3, 263.6],
+                ["Purple-circle", 12, 2, 11, 0.1, 0.1, 0.1, 9.4, 9.7],
+                ["Cake", 28, 384, 28, 0.1, 0.1, 0.1, 309.7, 310.0],
+                ["Coffee", 19, 96, 13, 0.1, 0.1, 0.1, 48.7, 49.0],
+                ["Ladybug", 26, 128, 24, 0.1, 0.1, 0.1, 137.7, 138.0],
+                ["Phone", 7, 5, 5, 0.1, 0.1, 0.1, 0.9, 1.2],
+                ["Cow", 51, 384, 48, 0.1, 1.2, 0.1, 560.8, 562.2],
+                ["Hammer", 19, 24, 18, 0.1, 0.1, 0.1, 40.2, 40.5],
+                ["Truck", 45, 112, 43, 0.1, 0.9, 0.1, 204.3, 205.4],
+                ["Tiger", 32, 16, 28, 0.1, 0.1, 0.1, 23.6, 23.9],
+                ["Stop", 23, 16, 22, 0.1, 0.1, 0.1, 14.1, 14.4],
+                ["Teacup", 9, 10, 9, 0.1, 0.1, 0.1, 2.3, 2.6],
+                ["House", 42, 256, 42, 0.1, 0.9, 0.1, 633, 634.1],
+                ["Cherry", 13, 12, 13, 0.1, 0.1, 0.1, 5, 5.3],
+                ["Sound", 32, 256, 32, 0.1, 0.2, 0.1, 931.8, 932.2],
+                ["Torch", 21, 2, 19, 0.1, 0.1, 0.1, 5.7, 6.0],
+                ["Bear", 31, 48, 30, 0.1, 0.1, 0.1, 92.3, 92.6],
+                ["Rocket", 32, 112, 30, 0.1, 0.2, 0.1, 268.3, 268.7],
+                ["Mouse", 17, 4, 15, 0.1, 0.1, 0.1, 27.3, 27.6],
+                ["Plane", 53, 112, 50, 0.1, 2.1, 0.1, 238.4, 240.7],
+                ["Shoe1", 12, 46, 10, 0.1, 0.1, 0.1, 11.8, 12.1],
+                ["Soda", 26, 8, 23, 0.1, 0.1, 0.1, 31.9, 32.2],
+                ["Lamp", 20, 56, 20, 0.1, 0.1, 0.1, 32.8, 33.1],
+                ["Teapot1", 25, 368, 22, 0.1, 0.4, 0.1, 240.4, 241.0],
+                ["Egg", 6, 2, 6, 0.1, 0.1, 0.1, 1.8, 2.1],
+                ["Shoe2", 10, 2, 10, 0.1, 0.1, 0.1, 2.2, 2.5],
+                ["Trees", 41, 48, 32, 0.1, 44.5, 0.2, 68.8, 113.6],
+                ["Teapot2", 34, 960, 30, 0.1, 45.6, 0.2, 849, 894.9],
+                ["Toothpaste", 45, 6, 44, 0.1, 0.1, 0.1, 45.1, 45.4],
+                ["Syn0", 12, 12, 5, 0.1, 0.1, 0.1, 3.2, 3.5],
+                ["Syn1", 10, 8, 6, 0.1, 0.1, 0.1, 3.9, 4.2],
+                ["Syn2", 11, 8, 6, 0.1, 0.1, 0.1, 4.3, 4.6],
+                ["Syn3", 12, 30, 6, 0.1, 0.1, 0.1, 7.8, 8.1],
+                ["Syn4", 9, 8, 6, 0.1, 0.1, 0.1, 0.1, 2.6, 2.9],
+                ["Syn5", 12, 4, 6, 0.1, 0.1, 0.1, 5, 5.3],
+                ["Syn6", 9, 1, 5, 0.1, 0.1, 0.1, 2.6, 2.9],
+                ["Syn7", 12, 4, 6, 0.1, 0.1, 0.1, 4.6, 4.9],
+                ["Syn8", 9, 8, 6, 0.1, 0.1, 0.1, 3.2, 3.5],
+                ["Battery", 20, 7, 20, 0.1, 0.1, 0.1, 24.4, 24.7],
+                ["Horn", 22, 24, 22, 0.1, 0.1, 0.1, 28.5, 28.8],
+                ["Telephone", 53, 8, 52, 0.1, 0.2, 0.1, 99.4, 99.8],
+                ["TV", 28, 8, 27, 0.1, 0.2, 0.1, 17.9, 18.3],
+                ["Bottle", 24, 60, 22, 0.1, 0.2, 0.1, 60.8, 61.2],
+                ["Tomato", 16, 23, 16, 0.1, 0.1, 0.1, 11.2, 11.5]
+            );
+
+            for (var i in table1) {
+                $(".time-cost").append(
+                    '<tr>' +
+                    '<td>' + table1[i][0] + '</td>' +
+                    '<td>' + table1[i][1] + '</td>' +
+                    '<td>' + table1[i][2] + '</td>' +
+                    '<td>' + table1[i][3] + '</td>' +
+                    '<td>' + table1[i][4] + '</td>' +
+                    '<td>' + table1[i][5] + '</td>' +
+                    '<td>' + table1[i][6] + '</td>' +
+                    '<td>' + table1[i][7] + '</td>' +
+                    '<td>' + table1[i][8] + '</td>' +
+                    '</tr>'
+                );
+            }
+        });
+        </script>
+        <section id="results">
+            <a href="#results">Introduction</a>
+            <hr />
+            <p>
+                The complete statistics are presented in Table 1. For each example, we provide the number of regions, the number of region supporting trees, the number of layers, and the processing time (in seconds) of region adjacency graph construction, spanning tree enumeration, layer merging, and parameter optimization.
+            </p>
+            <table cellspacing="0px" class="time-cost">
+                <caption>
+                    Table 1. Time Statistics
+                </caption>
+                <tr>
+                    <th>Example</th>
+                    <th>#Region</th>
+                    <th>#Tree</th>
+                    <th>#Layer</th>
+                    <th>Adj. Graph<br>Construction(s)</th>
+                    <th>Spanning tree<br>Enumeration(s)</th>
+                    <th>Layer<br>Merging(s)</th>
+                    <th>Parameter<br>Optimization(s)</th>
+                    <th>Total(s)</th>
+                </tr>
+            </table>
+        </section>
+    </main>
+    <footer></footer>
+</body>
+
+</html>

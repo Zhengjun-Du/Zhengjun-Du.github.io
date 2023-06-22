@@ -1,0 +1,10 @@
+@ARTICLE{crfslam2022,
+  author={Du, Zheng-Jun and Huang, Shi-Sheng and Mu, Tai-Jiang and Zhao, Qunhe and Martin, Ralph R. and Xu, Kun},
+  journal={IEEE Transactions on Visualization and Computer Graphics}, 
+  title={Accurate Dynamic SLAM Using CRF-Based Long-Term Consistency}, 
+  year={2022},
+  volume={28},
+  number={4},
+  pages={1745-1757},
+  doi={10.1109/TVCG.2020.3028218}
+}

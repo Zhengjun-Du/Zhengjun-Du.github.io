@@ -1,0 +1,76 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./material/css/style.css" />
+    <script type="text/javascript" src="./material/js/jquery-3.5.1.min.js"></script>
+    <title>
+        results of specifying opaque layers
+    </title>
+</head>
+
+<body>
+    <header>
+    </header>
+    <main>
+        <h2 style="text-align: center">Results of specifying opaque layers</h2>
+        <section id="results">
+            <a href="#results">Introduction</a>
+            <hr />
+            <p>
+                To improve the flexibility of our method, we allow users to specify some regions as opaque layers, especially for those X-junctions that do not meet the transparency assumption.
+            </p>
+            <ul>
+                <li>
+                    <span>Cube</span>
+                    <hr />
+                    <div class="image-list">
+                        <div>
+                            <div>
+                                <img style="border:none" src="./material/img/vectorize_specify_opaque_region/cube/input.png" />
+                                <img style="border:none" src="./material/img/vectorize_specify_opaque_region/cube/region.png" />
+                                <p style="font-weight:600">Input image and region segementation.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <img src="./material/img/vectorize_specify_opaque_region/cube/disassemble-layer.svg" />
+                                <p style="text-align:left; font-weight:600">Reconstructed vector graphic followed by vectorized layers from bottom to top</p>
+                            </div>
+                        </div>
+                    </div>
+                    In this case, although there are many x-junctions in the cube image, they do not satisfy the transparency assumption, i.e., the x-junction is not produced by one semi-transparent layer lying over the other two layers. Use could specify all regions as opaque layers to avoid unreasonable vectorization.
+                </li>
+                <li>
+                    <span>Mountain</span>
+                    <hr />
+                    <div class="image-list">
+                        <div>
+                            <div>
+                                <img style="border:none" src="./material/img/vectorize_specify_opaque_region/mountain/input.png" />
+                                <img style="border:none" src="./material/img/vectorize_specify_opaque_region/mountain/region.png" />
+                                <p style="font-weight:600">Input image and region segementation. Image designed by pikisuperstar on Freepik.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <img src="./material/img/vectorize_specify_opaque_region/mountain/disassemble-layer1.svg" />
+                                <p style="text-align:left; font-weight:600">Reconstructed vector graphic followed by vectorized layers from bottom to top</p>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <img src="./material/img/vectorize_specify_opaque_region/mountain/disassemble-layer2.svg" />
+                                <p style="text-align:left; font-weight:600">Reconstructed vector graphic followed by vectorized layers from bottom to top</p>
+                            </div>
+                        </div>
+                    </div>
+                    In this case, we specify the blue region at the top of the segmentation as opaque, resulting in the vector decomposition shown in row 2, and specify the yellow region as opaque, resulting in the vector decomposition shown in row 3.
+                </li>
+            </ul>
+        </section>
+    </main>
+    <footer></footer>
+</body>
+
+</html>
